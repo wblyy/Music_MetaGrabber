@@ -1,4 +1,4 @@
-#coding=utf-8
+0;136;0c#coding=utf-8
 """
 Get songs info like lyricist, composer, arrangement.
 
@@ -79,7 +79,7 @@ def re_find_lyurls(reg_text, msg):
 if __name__ == "__main__":
     #song = sys.argv[1]
     #singer = sys.argv[2]
-	csvfile = file('meta.csv', 'rb')
+	csvfile = file('meta_test.csv', 'rb')
 	reader = csv.reader(csvfile)
 
 	for lrow in list(reader):

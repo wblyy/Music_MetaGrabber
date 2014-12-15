@@ -79,14 +79,14 @@ def re_find_lyurls(reg_text, msg):
 if __name__ == "__main__":
     #song = sys.argv[1]
     #singer = sys.argv[2]
-	csvfile = file('meta.csv', 'rb')
+	csvfile = file('meta_test.csv', 'rb')
 	reader = csv.reader(csvfile)
 
 	for lrow in list(reader):
     
 		print lrow[1].decode('gbk').encode('UTF-8')
 		songdic = query(lrow[0].decode('gbk').encode('UTF-8'),lrow[1].decode('gbk').encode('UTF-8'))
-		dbV2.updat_song(songdic['lyricist'],songdic['composer'],songdic['arrangement'],songdic['fxtime'],lrow[0].decode('gbk').encode('UTF-8'),lrow[1].decode('gbk').encode('UTF-8'))#,song['fxtime']
+		dbV2.insert_l(song['lyricist'],song['composer'],song['arrangement'])#,song['fxtime']
 		#dbV2.get_id("dsds","sss")	
 		for k in songdic:
 			print k,songdic[k]

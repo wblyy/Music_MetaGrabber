@@ -5,7 +5,7 @@ class BaseDB(object):
     def __init__(self, database=None, user=None, passwd=None, host=None):
         self.database = database if database else 'mysql'
         self.user = user if user else 'root'
-        self.passwd = passwd if passwd else '654321'
+        self.passwd = passwd if passwd else ''
         self.host = host if host else '127.0.0.1'#不需要输端口号
 
     @property
@@ -34,7 +34,7 @@ class BaseDB(object):
     def test_db(self):
         return self._query_rows('show tables')
 
-class MydbV2(BaseDB):
+class MydbV1(BaseDB):
     def __init__(self):
         BaseDB.__init__(self, database='metadata')
 
@@ -42,16 +42,10 @@ class MydbV2(BaseDB):
         self._execute('insert ignore meta(song, artist, artist_img, album_name, album_img, album_release, company) '
                       'values (%s, %s, %s, %s, %s, %s, %s)', (song, artist, artist_img, album_name, album_pic, album_release, company))
 
-    def insert_song(self, song, artist,album,top):
-        self._execute('update meta_test set lyricist = '+lyricist+',composer='+composer+',arrangement='+arrangement+' where song='+song+' and artist='+artist+';'
-                      , (song, artist, album,top))
-
-    def insert_lyric(self, lyricist,composer,arrangement,song,artist):
-		self._query_rows('update meta set lyricist = '+lyricist+',composer='+composer+',arrangement='+arrangement+' where song='+song+' and artist='+artist)
+    def insert_song(self, song, artist,album):
+        self._execute('insert ignore meta(song, artist, album_name) '
+                      'values (%s, %s, %s)', (song, artist, album))
+	
 					  
     def get_id(self, song, artist):
         return self._query_rows('select id from meta where song=%s and artist=%s', (song, artist))
-
-    def updat_song(self, lyricist, composer, arrangement, fxtime, song, artist):
-        self._execute('update meta set lyricist=%s, composer=%s, arrangement=%s,album_release=%s where song=%s and artist=%s', (lyricist, composer, arrangement, fxtime,song, artist))
-	

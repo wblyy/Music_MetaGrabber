@@ -16,9 +16,6 @@ import urllib
 import os
 import csv
 import time
-from mydbV2 import MydbV2
-
-dbV2 = MydbV2()
 
 def open_url(url):
 	return urllib2.urlopen(url).read()
@@ -83,11 +80,12 @@ if __name__ == "__main__":
 	reader = csv.reader(csvfile)
 
 	for lrow in list(reader):
-    
+    #print '\t'.join(lrow[1])
+	#time.sleep(1)
+	#print lrow[0]
 		print lrow[1].decode('gbk').encode('UTF-8')
 		songdic = query(lrow[0].decode('gbk').encode('UTF-8'),lrow[1].decode('gbk').encode('UTF-8'))
-		dbV2.updat_song(songdic['lyricist'],songdic['composer'],songdic['arrangement'],songdic['fxtime'],lrow[0].decode('gbk').encode('UTF-8'),lrow[1].decode('gbk').encode('UTF-8'))#,song['fxtime']
-		#dbV2.get_id("dsds","sss")	
+		#time.sleep(1)
 		for k in songdic:
 			print k,songdic[k]
 

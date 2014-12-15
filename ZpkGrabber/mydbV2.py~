@@ -6,7 +6,7 @@ class BaseDB(object):
         self.database = database if database else 'mysql'
         self.user = user if user else 'root'
         self.passwd = passwd if passwd else '654321'
-        self.host = host if host else '127.0.0.1'#不需要输端口号
+        self.host = host if host else '114.243.222.166'#不需要输端口号
 
     @property
     def db(self):
@@ -38,9 +38,9 @@ class MydbV2(BaseDB):
     def __init__(self):
         BaseDB.__init__(self, database='metadata')
 
-    def insert_data(self, song, artist, artist_img, album_name, album_pic, album_release, company):
-        self._execute('insert ignore meta(song, artist, artist_img, album_name, album_img, album_release, company) '
-                      'values (%s, %s, %s, %s, %s, %s, %s)', (song, artist, artist_img, album_name, album_pic, album_release, company))
+    def insert_data(self, song, artist, language, producer, rights_owner):
+        self._execute('insert ignore cavca_zpk(song, artist, language, producer, rights_owner) '
+                      'values (%s, %s, %s, %s, %s, %s, %s)', (song, artist, language, producer, rights_owner))
 
     def insert_song(self, song, artist,album,top):
         self._execute('update meta_test set lyricist = '+lyricist+',composer='+composer+',arrangement='+arrangement+' where song='+song+' and artist='+artist+';'

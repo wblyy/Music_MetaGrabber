@@ -5,7 +5,7 @@ class BaseDB(object):
     def __init__(self, database=None, user=None, passwd=None, host=None):
         self.database = database if database else 'mysql'
         self.user = user if user else 'root'
-        self.passwd = passwd if passwd else ''
+        self.passwd = passwd if passwd else '654321'
         self.host = host if host else '127.0.0.1'#不需要输端口号
 
     @property
@@ -42,9 +42,12 @@ class MydbV1(BaseDB):
         self._execute('insert ignore meta(song, artist, artist_img, album_name, album_img, album_release, company) '
                       'values (%s, %s, %s, %s, %s, %s, %s)', (song, artist, artist_img, album_name, album_pic, album_release, company))
 
-    def insert_song(self, song, artist,album,top):
-        self._execute('insert ignore meta(song, artist, album_name, top_source) '
-                      'values (%s, %s, %s, %s)', (song, artist, album,top))
+    def insert_song(self, song,artist,album,top):
+        self._execute('insert ignore meta(song,artist,album_name,top_source) '
+                      'values (%s, %s, %s, %s)', (song,artist,album,top))
+    def insert_baidu_song(self, song,artist,top):
+        self._execute('insert ignore meta(song,artist,top_source) '
+                      'values (%s, %s, %s)', (song,artist,top))
 	
 					  
     def get_id(self, song, artist):
