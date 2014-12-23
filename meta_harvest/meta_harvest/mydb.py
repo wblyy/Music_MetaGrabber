@@ -14,7 +14,7 @@ class Mydb(object):
 
     @property
     def db(self):
-        return MySQLdb.connect("localhost", self.user, self.passwd, self.dbname, charset='utf8')
+        return MySQLdb.connect("soniegg.oicp.net", self.user, self.passwd, self.dbname, charset='utf8')
 
     @classmethod
     def instance(cls):
@@ -46,7 +46,9 @@ class Tiedb(Mydb):
     def __init__(self):
         Mydb.__init__(self, 'root', '654321', 'music_meta')
 
-
+    def get_album_name_163music(self,song, artist):
+        return self._query_row('select album from song_info_china where title=%s and artist=%s limit 1', (song, artist))
+    
     def get_album_info(self, album_id):
         return self._query_row('select company,publishDate from album_info where id=%s', (album_id, ))
     def get_album_company(self, album_name):

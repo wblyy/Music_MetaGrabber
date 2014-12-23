@@ -106,15 +106,21 @@ class Meta(Mydb):
         #print 'select song,artist from meta_new where %s LIKE concat("%%",song,"%%") and %s LIKE concat("%%",artist,"%%") limit 1'
         #return self._query_row('select song,artist from meta_new where %s concat("%%",song,"%%") and %s LIKE concat("%%",artist,"%%") limit 1', (song,artist))
         return self._query_row('select song,artist from meta_new where "'+song+'"LIKE concat("%",song,"%") and "'+artist+'" LIKE concat("%",artist,"%")')
+    def get_song_like_verse(self,song, artist):
+        #print 'select song,artist from meta_new where %s LIKE concat("%%",song,"%%") and %s LIKE concat("%%",artist,"%%") limit 1'
+        #return self._query_row('select song,artist from meta_new where %s concat("%%",song,"%%") and %s LIKE concat("%%",artist,"%%") limit 1', (song,artist))
+        return self._query_row('select song,artist from meta_new where "'+song+'"LIKE concat("%",song,"%")')
+        #and "'+artist+'" LIKE concat("%",artist,"%")
     def update_songmp3_like(self,song, artist):
-        return self._execute('update meta_new set mp3_path=concat(song," - ",artist,".mp3") where "'+song+'"LIKE concat("%",song,"%") and "'+artist+'" LIKE concat("%",artist,"%")')
+        return self._execute('update meta_new set mp3_path=concat(song," - ",artist,".mp3") where "'+song+'"LIKE concat("%",song,"%")')
     def update_cover_like(self,song, artist):
-        return self._execute('update meta_new set album_img_path=concat(song," - ",artist,".jpg") where "'+song+'"LIKE concat("%",song,"%") and "'+artist+'" LIKE concat("%",artist,"%")')
+        return self._execute('update meta_new set album_img_path=concat(song," - ",artist,".jpg") where "'+song+'"LIKE concat("%",song,"%")')
     def update_lrc_like(self,song, artist):
-        return self._execute('update meta_new set lyric_path=concat(song," - ",artist,".lrc") where "'+song+'"LIKE concat("%",song,"%") and "'+artist+'" LIKE concat("%",artist,"%")')
+        return self._execute('update meta_new set lyric_path=concat(song," - ",artist,".lrc") where "'+song+'"LIKE concat("%",song,"%")')
     def update_album_like(self,album,song, artist):
-        return self._execute('update meta_new set album_name="'+album+'" where "'+song+'"LIKE concat("%",song,"%") and "'+artist+'" LIKE concat("%",artist,"%")')
-    
+        return self._execute('update meta_new set album_name="'+album+'" where "'+song+'"LIKE concat("%",song,"%")')
+    def insert_new(self, song, artist,album_name,mp3_path):
+        self._execute('insert ignore meta_new (song, artist,album_name,mp3_path) values (%s, %s,%s,%s)', (song, artist,album_name,mp3_path))
 
     def insert_data(self, song, artist):
         self._execute('insert ignore meta_new (song, artist) values (%s, %s)', (song, artist))
